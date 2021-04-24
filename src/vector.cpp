@@ -57,13 +57,14 @@ Vector Vector::operator + (const Vector &v) {
  |      Roznice dwoch skladnikow przekazanych jako wskaznik                   |
  |      na parametr.                                                          |
  */
-Vector Vector::operator - (const Vector &v) {
+Vector Vector::operator - (const Vector &tmp) {
     Vector result;
     for (int i = 0; i < SIZE; ++i) {
-        result[i] = size[i] -= v[i];
+        result[i] = size[i] -= tmp[i];
     }
     return result;
 }
+
 
 
 /******************************************************************************
@@ -83,6 +84,7 @@ Vector Vector::operator * (const double &tmp) {
     }
     return result;
 }
+
 
 
 /******************************************************************************
@@ -105,6 +107,12 @@ Vector Vector::operator / (const double &tmp) {
     return result;
 }
 
+bool Vector::operator == (const Vector &tmp){
+    if((abs(this->size[0] - tmp.size[0]) <= MIN_DIFF ) && (abs(this->size[1] - tmp.size[1]) <= MIN_DIFF )){
+        return false;
+    }
+    return true;
+}
 
 /******************************************************************************
  |  Funktor wektora.                                                          |
@@ -130,7 +138,7 @@ const double &Vector::operator [] (int index) const {
  */
 double &Vector::operator[](int index) {
     return const_cast<double &>(const_cast<const Vector *>(this)->operator[](index));
-} 
+}
 
 
 /******************************************************************************
@@ -159,4 +167,12 @@ std::istream &operator >> (std::istream &in, Vector &tmp) {
     }
     std::cout << std::endl;
     return in;
+}
+
+std::ifstream &operator >> (std::ifstream &in, Vector &tmp){
+    
+    for (int i = 0; i < SIZE; ++i) {
+        in >> tmp[i];
+    }
+
 }

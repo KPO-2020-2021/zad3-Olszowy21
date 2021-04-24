@@ -1,6 +1,5 @@
 #include "../include/matrix.hh"
-
-
+#include "../include/vector.hh"
 
 /******************************************************************************
  |  Konstruktor klasy Matrix.                                                 |
@@ -33,7 +32,39 @@ Matrix::Matrix(double tmp[SIZE][SIZE]) {
     }
 }
 
+void Matrix::obrotmacierzy(double kat){
+    
+    double rad = kat * M_PI / 100;
 
+    value[0][0] = cos(rad);
+    value[0][1] = sin(rad);
+    value[1][0] = -sin(rad);
+    value[1][1] = cos(rad);
+}
+
+bool Matrix::operator == (const Matrix tmp) const{
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            if((this->value[i][j] - tmp.value[i][j]) > MIN_DIFF ){
+            return false;
+            }
+        }
+    }
+    return true;
+}
+/*
+double &Matrix::operator [] (int index){
+if (index < 0 || index >= SIZE) {
+        std::cerr << "Error: Wektor jest poza zasiegiem!" << std::endl;
+    } // lepiej byłoby rzucić wyjątkiem stdexcept
+    return size[index];
+}
+
+
+const double &Matrix::operator [] (int index) const{
+    
+}
+*/
 /******************************************************************************
  |  Realizuje mnozenie macierzy przez wektor.                                 |
  |  Argumenty:                                                                |
@@ -48,6 +79,26 @@ Vector Matrix::operator * (Vector tmp) {
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
             result[i] += value[i][j] * tmp[j];
+        }
+    }
+    return result;
+}
+
+/******************************************************************************
+ |  Realizuje mnozenie macierzy przez wektor przez.                           |
+ |  Argumenty:                                                                |
+ |     this - pierwszy skladnik mnozenia (macierz).                           |
+ |     tmp - drugi skladnik mnozenia (wektor)                                 |
+ |  Zwraca:                                                                   |
+ |      Iloczyn dwoch skladnikow przekazanych jako wskaznik                   |
+ |      na parametr.                                                          |
+ */
+Vector Matrix::operator * (const Vector &tmp){
+    Vector result;
+
+    for(int x = 0; x < SIZE; x++){
+        for(int y = 0; y < SIZE; y++){
+            result[x] += tmp[y] * this->value[y][x];
         }
     }
     return result;
