@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iomanip>
+#include <fstream>
 #include "size.hh"
 #include <iostream>
 #include <math.h>
@@ -12,13 +14,14 @@ class Vector {
     double size[SIZE];     //Tablica wektora
 
 public:
-
-    double MIN[SIZE];
     
 // Konstruktory
+
     Vector();
 
     Vector(double [SIZE]);
+
+    Vector(double x, double y );
 
 // Metody
 
@@ -42,7 +45,7 @@ public:
 
     Vector display();
     
-
+    void Load_vector(); 
 };
 
 std::istream &operator >> (std::istream &in, Vector &tmp);

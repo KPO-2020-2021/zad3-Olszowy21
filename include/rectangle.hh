@@ -1,9 +1,7 @@
 #pragma once
 #include "size.hh"
 #include "vector.hh"
-
-
-class Vector;
+#include "matrix.hh"
 
 class Rectangle {
 
@@ -17,6 +15,14 @@ public:
   Rectangle(Vector first, Vector second, Vector third, Vector fourth);
 
 // Metody
+
+  void Miotanie_prostokata(Matrix tmp);
+
+  void load_data(std::string File_name, int corner);
+
+  void ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy, Vector Przesuniecie);
+
+  bool ZapisWspolrzednychDoPliku( const char *File_name, Vector Przesuniecie);
 
   const Vector &operator [] (int index) const;
 

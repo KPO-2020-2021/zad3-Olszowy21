@@ -34,7 +34,7 @@ Matrix::Matrix(double tmp[SIZE][SIZE]) {
 
 void Matrix::obrotmacierzy(double kat){
     
-    double rad = kat * M_PI / 100;
+    double rad = kat * M_PI / 180;
 
     value[0][0] = cos(rad);
     value[0][1] = sin(rad);
@@ -93,16 +93,16 @@ Vector Matrix::operator * (Vector tmp) {
  |      Iloczyn dwoch skladnikow przekazanych jako wskaznik                   |
  |      na parametr.                                                          |
  */
-Vector Matrix::operator * (const Vector &tmp){
-    Vector result;
+// Vector Matrix::operator * (const Vector &tmp){
+//     Vector result;
 
-    for(int x = 0; x < SIZE; x++){
-        for(int y = 0; y < SIZE; y++){
-            result[x] += tmp[y] * this->value[y][x];
-        }
-    }
-    return result;
-}
+//     for(int x = 0; x < SIZE; x++){
+//         for(int y = 0; y < SIZE; y++){
+//             result[x] += tmp[y] * this->value[y][x];
+//         }
+//     }
+//     return result;
+// }
 
 
 /******************************************************************************

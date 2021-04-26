@@ -30,6 +30,13 @@ Vector::Vector(double tmp[SIZE]) {
 }
 
 
+Vector::Vector(double x, double y ) {
+    
+    this->size[0] = x;
+    this->size[1] = y;
+}
+
+
 /******************************************************************************
  |  Realizuje dodawanie dwoch wektorow.                                       |
  |  Argumenty:                                                                |
@@ -45,6 +52,16 @@ Vector Vector::operator + (const Vector &v) {
         result[i] = size[i] += v[i];
     }
     return result;
+}
+
+void Vector::Load_vector(){
+    double x,y;
+    std::cout<<"Proszę podać wektor przesunięcia"<<std::endl;
+    std::cin>>x;
+    std::cin>>y;
+
+    this->size[0] = x;
+    this->size[1] = y;
 }
 
 
@@ -149,7 +166,7 @@ double &Vector::operator[](int index) {
  */
 std::ostream &operator << (std::ostream &out, Vector const &tmp) {
     for (int i = 0; i < SIZE; ++i) {
-        out << "[ " << tmp[i] << " ]\n";
+        out << "[ " << tmp[i] << " ] ";
     }
     return out;
 }
@@ -174,5 +191,5 @@ std::ifstream &operator >> (std::ifstream &in, Vector &tmp){
     for (int i = 0; i < SIZE; ++i) {
         in >> tmp[i];
     }
-
+    return in;
 }
