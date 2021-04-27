@@ -6,7 +6,7 @@ Rectangle::Rectangle() {
 top[0] = Vector(10, 10);
 top[1] = Vector(160, 10);
 top[2] = Vector(160, 110);
-top[3] = Vector(10, 10);
+top[3] = Vector(10, 110);
 
 }
 
@@ -68,7 +68,7 @@ std::ostream &operator << (std::ostream &out, Rectangle const &tmp){
  * \retval false - w przypadku przeciwnym.
  */
 
-void Rectangle::ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy, Vector Przesuniecie)
+void Rectangle::ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy)
 {
 
 //   double  x1, y1, x2, y2, x3, y3, x4, y4; 
@@ -79,16 +79,16 @@ void Rectangle::ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy, Vector Pr
 //   x4 = x3 - DL_DLUGI_BOK; y4 = y3;
 
 
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[0][0] + Przesuniecie[0] 
-         << std::setw(16) << std::fixed << std::setprecision(10) << top[0][1] + Przesuniecie[1] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[1][0] + Przesuniecie[0] 
-         << std::setw(16) << std::fixed << std::setprecision(10) << top[1][1] + Przesuniecie[1] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[2][0] + Przesuniecie[0] 
-         << std::setw(16) << std::fixed << std::setprecision(10) << top[2][1] + Przesuniecie[1] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[3][0] + Przesuniecie[0] 
-         << std::setw(16) << std::fixed << std::setprecision(10) << top[3][1] + Przesuniecie[1] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[0][0] + Przesuniecie[0] 
-         << std::setw(16) << std::fixed << std::setprecision(10) << top[0][1] + Przesuniecie[1] << std::endl; 
+  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[0][0] 
+         << std::setw(16) << std::fixed << std::setprecision(10) << top[0][1] << std::endl;
+  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[1][0] 
+         << std::setw(16) << std::fixed << std::setprecision(10) << top[1][1] << std::endl;
+  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[2][0] 
+         << std::setw(16) << std::fixed << std::setprecision(10) << top[2][1] << std::endl;
+  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[3][0]
+         << std::setw(16) << std::fixed << std::setprecision(10) << top[3][1] << std::endl;
+  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[0][0] 
+         << std::setw(16) << std::fixed << std::setprecision(10) << top[0][1] << std::endl; 
                              // Jeszcze raz zapisujemy pierwszy punkt,
                              // aby gnuplot narysowal zamkniętą linię.
 }
@@ -128,7 +128,7 @@ void Rectangle::ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy, Vector Pr
  * \retval false - w przypadku przeciwnym.
  */
 
-bool Rectangle::ZapisWspolrzednychDoPliku( const char *File_name, Vector Przesuniecie)
+bool Rectangle::ZapisWspolrzednychDoPliku( const char *File_name)
 {
   std::ofstream  StrmPlikowy;
 
@@ -140,14 +140,14 @@ bool Rectangle::ZapisWspolrzednychDoPliku( const char *File_name, Vector Przesun
     return false;
   }
 
-  ZapisWspolrzednychDoStrumienia(StrmPlikowy, Przesuniecie);
+  ZapisWspolrzednychDoStrumienia(StrmPlikowy);
 
   StrmPlikowy.close();
   return !StrmPlikowy.fail();
 }
 
 
-void Rectangle::Miotanie_prostokata(Matrix tmp){
+void Rectangle::Miotanie_prostokata(const Matrix &tmp){
     
     for(int i=0;i<SIZE*2;i++){
 
@@ -156,6 +156,14 @@ void Rectangle::Miotanie_prostokata(Matrix tmp){
     }
 }
 
+void Rectangle::Kicking_rectangle(const Vector &tmp){
+    
+    for(int i=0;i<SIZE*2;i++){
+
+        top[i] = top[i] + tmp;
+
+    }
+}
 
 
 

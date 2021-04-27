@@ -37,34 +37,36 @@ void Matrix::obrotmacierzy(double kat){
     double rad = kat * M_PI / 180;
 
     value[0][0] = cos(rad);
-    value[0][1] = sin(rad);
-    value[1][0] = -sin(rad);
+    value[0][1] = -sin(rad);
+    value[1][0] = sin(rad);
     value[1][1] = cos(rad);
 }
 
 bool Matrix::operator == (const Matrix tmp) const{
+    
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
             if((this->value[i][j] - tmp.value[i][j]) > MIN_DIFF ){
-            return false;
+                return false;
             }
         }
     }
     return true;
 }
-/*
+
 double &Matrix::operator [] (int index){
-if (index < 0 || index >= SIZE) {
-        std::cerr << "Error: Wektor jest poza zasiegiem!" << std::endl;
-    } // lepiej byłoby rzucić wyjątkiem stdexcept
-    return size[index];
+if (index < 0 || index >= SIZE*2) {
+        std::cerr << "Error: Macierz jest poza zasiegiem!" << std::endl;
+} // lepiej byłoby rzucić wyjątkiem stdexcept
+
+return value[index][index];
 }
 
 
 const double &Matrix::operator [] (int index) const{
-    
+    return value[index][index];
 }
-*/
+
 /******************************************************************************
  |  Realizuje mnozenie macierzy przez wektor.                                 |
  |  Argumenty:                                                                |
@@ -74,7 +76,7 @@ const double &Matrix::operator [] (int index) const{
  |      Iloczyn dwoch skladnikow przekazanych jako wektor.                    |
  */
 
-Vector Matrix::operator * (Vector tmp) {
+Vector Matrix::operator * (Vector tmp) const{
     Vector result;
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
@@ -92,17 +94,17 @@ Vector Matrix::operator * (Vector tmp) {
  |  Zwraca:                                                                   |
  |      Iloczyn dwoch skladnikow przekazanych jako wskaznik                   |
  |      na parametr.                                                          |
- */
-// Vector Matrix::operator * (const Vector &tmp){
-//     Vector result;
+//  */
+Vector Matrix::operator * (const Vector &tmp){
+    Vector result;
 
-//     for(int x = 0; x < SIZE; x++){
-//         for(int y = 0; y < SIZE; y++){
-//             result[x] += tmp[y] * this->value[y][x];
-//         }
-//     }
-//     return result;
-// }
+    for(int x = 0; x < SIZE; x++){
+        for(int y = 0; y < SIZE; y++){
+            result[x] += tmp[y] * this->value[y][x];
+        }
+    }
+    return result;
+}
 
 
 /******************************************************************************

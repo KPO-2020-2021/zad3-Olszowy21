@@ -124,7 +124,7 @@ Vector Vector::operator / (const double &tmp) {
     return result;
 }
 
-bool Vector::operator == (const Vector &tmp){
+bool Vector::operator == (const Vector &tmp) const{
     if((abs(this->size[0] - tmp.size[0]) <= MIN_DIFF ) && (abs(this->size[1] - tmp.size[1]) <= MIN_DIFF )){
         return false;
     }
