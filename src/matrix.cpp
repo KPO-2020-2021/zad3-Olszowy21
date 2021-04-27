@@ -46,7 +46,7 @@ bool Matrix::operator == (const Matrix tmp) const{
     
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
-            if((this->value[i][j] - tmp.value[i][j]) > MIN_DIFF ){
+            if(std::abs(this->value[i][j] - tmp.value[i][j]) > MIN_DIFF ){
                 return false;
             }
         }
@@ -98,8 +98,8 @@ Vector Matrix::operator * (Vector tmp) const{
 Vector Matrix::operator * (const Vector &tmp){
     Vector result;
 
-    for(int x = 0; x < SIZE; x++){
-        for(int y = 0; y < SIZE; y++){
+    for(int x = 0; x < SIZE; ++x){
+        for(int y = 0; y < SIZE; ++y){
             result[x] += tmp[y] * this->value[y][x];
         }
     }

@@ -9,7 +9,7 @@
  |      Tablice wypelniona wartoscia 0.                                       |
  */
 Vector::Vector() {
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         size[i] = 0;
     }
 }
@@ -24,8 +24,8 @@ Vector::Vector() {
  */
 
 Vector::Vector(double tmp[SIZE]) {
-    for (int i = 0; i < SIZE; ++i) {
-        size[i] = tmp[i];
+    for (int i = 0; i < SIZE; i++) {
+        this->size[i] = tmp[i];
     }
 }
 
@@ -48,7 +48,7 @@ Vector::Vector(double x, double y ) {
  */
 Vector Vector::operator + (const Vector &v) {
     Vector result;
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         result[i] = size[i] += v[i];
     }
     return result;
@@ -76,7 +76,7 @@ void Vector::Load_vector(){
  */
 Vector Vector::operator - (const Vector &tmp) {
     Vector result;
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         result[i] = size[i] -= tmp[i];
     }
     return result;
@@ -96,7 +96,7 @@ Vector Vector::operator - (const Vector &tmp) {
 
 Vector Vector::operator * (const double &tmp) {
     Vector result;
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         result[i] = size[i] *= tmp;
     }
     return result;
@@ -117,7 +117,7 @@ Vector Vector::operator * (const double &tmp) {
 Vector Vector::operator / (const double &tmp) {
     Vector result;
 
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         result[i] = size[i] / tmp;
     }
 
@@ -125,10 +125,10 @@ Vector Vector::operator / (const double &tmp) {
 }
 
 bool Vector::operator == (const Vector &tmp) const{
-    if((abs(this->size[0] - tmp.size[0]) <= MIN_DIFF ) && (abs(this->size[1] - tmp.size[1]) <= MIN_DIFF )){
-        return false;
+    if((std::abs(this->size[0] - tmp.size[0]) <= MIN_DIFF ) && (std::abs(this->size[1] - tmp.size[1]) <= MIN_DIFF )){
+        return true;
     }
-    return true;
+    return false;
 }
 
 /******************************************************************************
@@ -165,7 +165,7 @@ double &Vector::operator[](int index) {
  |      tmp - wektor.                                                         |
  */
 std::ostream &operator << (std::ostream &out, Vector const &tmp) {
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         out << "[ " << tmp[i] << " ] ";
     }
     return out;
@@ -179,7 +179,7 @@ std::ostream &operator << (std::ostream &out, Vector const &tmp) {
  |      tmp - wektor.                                                         |
  */
 std::istream &operator >> (std::istream &in, Vector &tmp) {
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         in >> tmp[i];
     }
     std::cout << std::endl;
@@ -188,7 +188,7 @@ std::istream &operator >> (std::istream &in, Vector &tmp) {
 
 std::ifstream &operator >> (std::ifstream &in, Vector &tmp){
     
-    for (int i = 0; i < SIZE; ++i) {
+    for (int i = 0; i < SIZE; i++) {
         in >> tmp[i];
     }
     return in;

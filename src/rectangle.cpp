@@ -19,14 +19,14 @@ this->top[3] = fourth;
 
 }
 
-bool Rectangle::operator != (const Rectangle &tmp){
+bool Rectangle::operator != (const Rectangle &tmp) const{
     return !(*this == tmp);
 }
 
-bool Rectangle::operator == (const Rectangle &tmp){
+bool Rectangle::operator == (const Rectangle &tmp) const{
 
     for(int i = 0; i < SIZE*2; i++){
-        if(this->top[i] == tmp.top[i]){
+        if(!(this->top[i] == tmp.top[i])){
             return false;
         }
     }
@@ -147,7 +147,7 @@ bool Rectangle::ZapisWspolrzednychDoPliku( const char *File_name)
 }
 
 
-void Rectangle::Miotanie_prostokata(const Matrix &tmp){
+void Rectangle::throwing_rectangle(const Matrix &tmp){
     
     for(int i=0;i<SIZE*2;i++){
 
@@ -168,10 +168,10 @@ void Rectangle::Kicking_rectangle(const Vector &tmp){
 
 
 
-#ifdef ENABLE_DOCTEST_IN_LIBRARY
-#include "../tests/doctest/doctest.h"
-TEST_CASE("we can have tests written here, to test impl. details")
-{
-    CHECK(true);
-}
-#endif
+// #ifdef ENABLE_DOCTEST_IN_LIBRARY
+// #include "../tests/doctest/doctest.h"
+// TEST_CASE("we can have tests written here, to test impl. details")
+// {
+//     CHECK(true);
+// }
+// #endif
