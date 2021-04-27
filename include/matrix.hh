@@ -14,15 +14,15 @@ public:
 
 // Konstruktory
 
-    Matrix(double [SIZE][SIZE]);               // Konstruktor klasy
+    Matrix(double tmp[SIZE][SIZE]);            // Konstruktor klasy
 
     Matrix();                                  // Konstruktor klasy
 
 // Metody
 
-    Vector operator * (Vector tmp);            // Operator mnożenia przez wektor
+    Vector operator * (Vector tmp) const;            // Operator mnożenia przez wektor
 
-   // Vector operator * (const Vector &tmp);
+    Vector operator * (const Vector &tmp);
 
     Matrix operator + (Matrix tmp);
 

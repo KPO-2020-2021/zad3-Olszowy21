@@ -35,7 +35,7 @@ public:
 
     Vector operator * (matrix &tmp);
 
-    bool operator == (const Vector &tmp);
+    bool operator == (const Vector &tmp) const;
 
     const double &operator [] (int index) const;
 

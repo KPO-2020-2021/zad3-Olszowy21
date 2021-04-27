@@ -16,13 +16,15 @@ public:
 
 // Metody
 
-  void Miotanie_prostokata(Matrix tmp);
+  void Miotanie_prostokata(const Matrix &tmp);
+
+  void Kicking_rectangle(const Vector &tmp);
 
   void load_data(std::string File_name, int corner);
 
-  void ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy, Vector Przesuniecie);
+  void ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy);
 
-  bool ZapisWspolrzednychDoPliku( const char *File_name, Vector Przesuniecie);
+  bool ZapisWspolrzednychDoPliku( const char *File_name);
 
   const Vector &operator [] (int index) const;
 
