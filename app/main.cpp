@@ -25,9 +25,6 @@
  * EDIT: dodane kreowanie wektorow i macierzy plus obsluga lacza do gnuplota
  */
 
-#define DL_KROTKI_BOK  100
-#define DL_DLUGI_BOK   150
-
 
 int main() {
   std::cout << "Project Rotation 2D based on C++ Boiler Plate v"
@@ -58,7 +55,7 @@ int main() {
        std::string File_name = "../datasets/prostokat.dat";
        const char* WSK_FILE = File_name.c_str();
        std::ofstream FILE;
-       Rectangle rectangle;
+       Rectangle rectangle = Rectangle();
        Vector Przesuniecie = Vector();
        Matrix macierz;
        PzG::LaczeDoGNUPlota  Lacze;       // Ta zmienna jest potrzebna do wizualizacji
@@ -82,6 +79,9 @@ int main() {
        //  jako wspolrzedne punktow podajemy tylko x,y.
        //
        Lacze.ZmienTrybRys(PzG::TR_2D);
+
+
+       if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE )) { return 1; }
 
   while(1){
 
@@ -112,7 +112,7 @@ int main() {
 
               rectangle.Miotanie_prostokata(macierz);
 
-              if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE, Przesuniecie )) {
+              if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE )) {
                      return 1;
               }
 
@@ -121,8 +121,8 @@ int main() {
               break;
        case 2:
               Przesuniecie.Load_vector();
-
-              if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE, Przesuniecie )) {
+              rectangle.Kicking_rectangle(Przesuniecie);
+              if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE )) {
                      return 1;
               }
 
@@ -133,7 +133,8 @@ int main() {
               std::cout << rectangle;
               break;
        case 4:
-              exit(-1);
+              if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE )) { return 1; }
+              exit(1);
               break;
        default:
               std::cout<<"Niepoprawna operacja, numerek 0 to MENU"<<std::endl;
