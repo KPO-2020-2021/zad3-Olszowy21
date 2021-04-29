@@ -4,11 +4,15 @@
 #include <fstream>
 #include "size.hh"
 #include <iostream>
+#include <cstdlib>
+#include <cmath>
 #include <math.h>
+#include <string>
+#include <sstream>
 #define MIN_DIFF 0.000001
 
 class matrix;
-class Rectangle;
+
 class Vector {
 
     double size[SIZE];     //Tablica wektora
@@ -53,5 +57,3 @@ std::istream &operator >> (std::istream &in, Vector &tmp);
 std::ifstream &operator >> (std::ifstream &in, Vector &tmp);
 
 std::ostream &operator << (std::ostream &out, Vector const &tmp);
-
-std::ofstream &operator << (std::ofstream &out, Vector const &tmp);

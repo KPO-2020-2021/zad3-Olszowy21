@@ -2,6 +2,7 @@
 #include "matrix.hh"
 #include "size.hh"
 #include "vector.hh"
+#include "rectangle.hh"
 
 TEST_CASE("Test konstruktorów bezparametrycznych")
 {
@@ -39,10 +40,12 @@ TEST_CASE("Test konstruktorów parametrycznych")
 
 TEST_CASE("Test przeciążenia mnożenia MACIERZ * WEKTOR")
 {
+
+
     Matrix macierz;
     Vector wektor(2, 2);
     Vector test;
-    Vector Wynik(4, 12);
+    Vector Wynik(6, 12);
 
     macierz(0, 0) = 1;
     macierz(1, 0) = 2;
@@ -54,48 +57,45 @@ TEST_CASE("Test przeciążenia mnożenia MACIERZ * WEKTOR")
     CHECK(Wynik == test);
 }
 
+TEST_CASE("Test operatora [] ")
+{
+    Matrix macierz = Matrix();
 
-// TEST_CASE("Test operatora [] ")
-// {
-//     Matrix macierz = Matrix();
+    Matrix test;
 
-//     Matrix test;
+    test(0, 0) = 0;
+    test(1, 0) = 0;
+    test(0, 1) = 0;
+    test(1, 1) = 0;
 
-//     test(0, 0) = 0;
-//     test(1, 0) = 0;
-//     test(0, 1) = 0;
-//     test(1, 1) = 0;
+    CHECK(macierz == test);
+}
 
-//     CHECK(macierz == test);
-// }
+TEST_CASE("Test zabezpieczenia operatora ()")
+{
+    Matrix macierz = Matrix();
+    std::ostringstream Strumien_out;
 
-// TEST_CASE("Test operatora const [] ")
-// {
-//     Matrix macierz = Matrix();
+    WARN_THROWS(Strumien_out << macierz(2, 2));
+}
 
-//     Matrix test;
+TEST_CASE("Test operatora []")
+{
+    Matrix macierz = Matrix();
+    std::ostringstream Strumien_out;
 
-//     test(0, 0) = 0;
-//     test(1, 0) = 0;
-//     test(0, 1) = 0;
-//     test(1, 1) = 0;
-
-//     CHECK(macierz == test);
-// }
-
-
-// TEST_CASE("Test operatora bez const () ")
-// {
-//     Matrix macierz;
-
-//     Matrix test;
-
-//     test(0, 0) = 0;
-//     test(1, 0) = 0;
-//     test(0, 1) = 0;
-//     test(1, 1) = 0;
-
-//     CHECK(macierz == test);
-// }
+    Strumien_out << macierz.operator[](0);
 
 
+    CHECK("0" == Strumien_out.str());
+}
+
+TEST_CASE("Test operatora ()")
+{
+    Matrix macierz = Matrix();
+    std::ostringstream Strumien_out;
+
+    Strumien_out << macierz(1, 1);
+
+    CHECK("0" == Strumien_out.str());
+}

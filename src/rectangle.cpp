@@ -1,6 +1,12 @@
 #include "rectangle.hh"
 
-
+/******************************************************************************
+ |  Konstruktor klasy Rectangle.                                              |
+ |  Argumenty:                                                                |
+ |      Brak argumentow.                                                      |
+ |  Zwraca:                                                                   |
+ |      Tablice wypelniona wartosciami domyslnymi.                            |
+ */
 Rectangle::Rectangle() {
 
 top[0] = Vector(10, 10);
@@ -10,6 +16,13 @@ top[3] = Vector(10, 110);
 
 }
 
+/******************************************************************************
+ |  Konstruktor klasy Rectangle.                                              |
+ |  Argumenty:                                                                |
+ |      Cztery wektory klasy Vector sluzace jako wspolrzedne prostokata.      |
+ |  Zwraca:                                                                   |
+ |      Tablice wypelniona  zadanymi mu wartosciami.                          |
+ */
 Rectangle::Rectangle(Vector first, Vector second, Vector third, Vector fourth){
 
 this->top[0] = first;
@@ -19,10 +32,13 @@ this->top[3] = fourth;
 
 }
 
-bool Rectangle::operator != (const Rectangle &tmp) const{
-    return !(*this == tmp);
-}
-
+/*!
+ * Realizuje porownanie dwoch prostokatow ze soba dopuszczajac margines bledu.
+ * \param[in] tmp - nazwa prostokata sprawdzanego z prostokatem zawartym wewnatrz klasy
+ * 
+ * \retval true - gdy oba sa sobie rowne.
+ * \retval false - w przypadku przeciwnym.
+ */
 bool Rectangle::operator == (const Rectangle &tmp) const{
 
     for(int i = 0; i < SIZE*2; i++){
@@ -33,18 +49,34 @@ bool Rectangle::operator == (const Rectangle &tmp) const{
     return true;
 }
 
-
-Vector& Rectangle::operator [] (int index){
+/*!
+ * Przeciazenie operatora [] dla danych chronionych prostokata.
+ * \param[in] index - pomocniczy unsigned int ktory zwroci odpowiedni dla
+ *                      liczby czesc tablicy wiechrzolkow.
+ * 
+ */
+Vector& Rectangle::operator [] (unsigned int index){
     return top[index];
 }
 
-
-const Vector& Rectangle::operator [] (int index) const{
+/*!
+ * Przeciazenie operatora [] const dla danych chronionych prostokata.
+ * \param[in] index - pomocniczy unsidned int ktory zwroci odpowiedni dla
+ *                      liczby czesc tablicy wiechrzolkow.
+ * 
+ */
+const Vector& Rectangle::operator [] (unsigned int index) const{
     return top[index];
-    //return const_cast<double &>(const_cast<const Rectangle *>(this)->operator[](index));
 }
 
-
+/*!
+ * Przeciazenie operatora wypisywania.
+ * \param[in] out - strumien wyjsciowy, do ktorego maja zostac zapisane
+ *                     kolejne wiechrzolki.
+ * \param[in] tmp - skladowa klasy Rectangle ktora bedzie wypisywana na
+ *                      wyjscie.
+ * 
+ */
 std::ostream &operator << (std::ostream &out, Rectangle const &tmp){
 
     for(int i = 0; i < SIZE*2; i++){
@@ -54,30 +86,17 @@ std::ostream &operator << (std::ostream &out, Rectangle const &tmp){
 }
 
 /*!
- * Przyklad zapisu wspolrzednych zbioru punktow do strumienia wyjściowego.
+ * Zapis wspolrzednych zbioru punktow do strumienia wyjściowego.
  * Dane sa odpowiednio sformatowane, tzn. przyjęto notację stałoprzecinkową
  * z dokładnością do 10 miejsca po przecinku. Szerokość wyświetlanego pola 
  * to 16 miejsc, sposób wyrównywania - do prawej strony.
  * \param[in] StrmWy - strumien wyjsciowy, do ktorego maja zostac zapisane
  *                     kolejne wspolrzedne.
- * \param[in] Przesuniecie - ten parameter jest tylko po to, aby pokazać
- *                          mozliwosc zmiany wspolrzednych i prostokata
- *                          i zmiane jego polorzenia na okienku graficznym
- *                         rysownym przez gnuplota.
- * \retval true - gdy operacja zapisu powiodła się,
- * \retval false - w przypadku przeciwnym.
+ * 
  */
 
 void Rectangle::ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy)
 {
-
-//   double  x1, y1, x2, y2, x3, y3, x4, y4; 
-
-//   x1 = y1 = 10;
-//   x2 = x1 + DL_DLUGI_BOK;  y2 = y1;
-//   x3 = x2;  y3 = y2 + DL_KROTKI_BOK;
-//   x4 = x3 - DL_DLUGI_BOK; y4 = y3;
-
 
   StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << top[0][0] 
          << std::setw(16) << std::fixed << std::setprecision(10) << top[0][1] << std::endl;
@@ -94,36 +113,12 @@ void Rectangle::ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy)
 }
 
 
-// std::ofstream &operator << (std::ofstream &out, Rectangle const &tmp){
-    
-//     std::ofstream File;
-
-//     out << std::setprecision(10) << std::fixed;
-
-//     for(int i = 0; i < SIZE*2; i++){
-//         File << tmp.operator[](i);
-//     }
-
-//     return out;
-// }
-
-// void Rectangle::load_data(std::string namefile, int corner){
-    
-//     std::ofstream file_data;
-
-//     //file_data.open();
-
-// }
-
 /*!
  * Przyklad zapisu wspolrzednych zbioru punktow do pliku, z ktorego
  * dane odczyta program gnuplot i narysuje je w swoim oknie graficznym.
  * \param[in] File_name - nazwa pliku, do którego zostana zapisane
  *                          wspolrzędne punktów.
- * \param[in] Przesuniecie - ten parameter jest tylko po to, aby pokazać
- *                          mozliwosc zmiany wspolrzednych i prostokata
- *                          i zmiane jego polorzenia na okienku graficznym
- *                         rysownym przez gnuplota.
+ * 
  * \retval true - gdy operacja zapisu powiodła się,
  * \retval false - w przypadku przeciwnym.
  */
@@ -136,7 +131,7 @@ bool Rectangle::ZapisWspolrzednychDoPliku( const char *File_name)
 
   if (!StrmPlikowy.is_open())  {
     std::cerr << ":(  Operacja otwarcia do zapisu \"" << File_name << "\"" << std::endl
-	 << ":(  nie powiodla sie." << std::endl;
+    << ":(  nie powiodla sie." << std::endl;
     return false;
   }
 
@@ -146,7 +141,11 @@ bool Rectangle::ZapisWspolrzednychDoPliku( const char *File_name)
   return !StrmPlikowy.fail();
 }
 
-
+/*!
+ * Metoda obracania punktow szczegolnych figury.
+ * \param[in] tmp - nazwa macierzy która przysłuży się do obracania punktow prostokata
+ *                         
+ */
 void Rectangle::throwing_rectangle(const Matrix &tmp){
     
     for(int i=0;i<SIZE*2;i++){
@@ -156,6 +155,11 @@ void Rectangle::throwing_rectangle(const Matrix &tmp){
     }
 }
 
+/*!
+ * Metoda przesuwania punktow szczegolnych figury o zadany wektor.
+ * \param[in] tmp - nazwa wektora która przysluzy się do przesuniecia punktow prostokata
+ *                         
+ */
 void Rectangle::Kicking_rectangle(const Vector &tmp){
     
     for(int i=0;i<SIZE*2;i++){
@@ -165,13 +169,42 @@ void Rectangle::Kicking_rectangle(const Vector &tmp){
     }
 }
 
+/*!
+ * Metoda sprawdzania dlugosci przeciwleglych bokow aktualnej figury
+ * znajdujacej sie w klasie rectangle ( prostokata ).
+ * \param[in] tmp - nazwa macierzy która przysłuży się do obracania punktow prostokata
+ *  
+ * \retval true - gdy boki prostokata sa rowne
+ * \retval false - w przypadku przeciwnym.                       
+ */
+bool Rectangle::length_of_the_sides(){
+    double side1; //                                      side3
+                  //             top[0] ---> *------------------------------* <--- top[2]
+    double side2; //                         |                              |
+                  //                         |                              |
+    double side3; //           side4 --->    |                              |   <--- side2
+                  //                         |                              |
+    double side4; //                         |                              |
+                  //             top[0] ---> *------------------------------* <--- top[1]
+                  //                                      side1
+    
+    side1 = sqrt( pow( std::abs(top[1][0] - top[0][0]),2)  +  pow( std::abs(top[1][1] - top[0][1]),2));
 
+    side2 = sqrt( pow( std::abs(top[2][0] - top[1][0]),2)  +  pow( std::abs(top[2][1] - top[1][1]),2));
 
+    side3 = sqrt( pow( std::abs(top[3][0] - top[2][0]),2)  +  pow( std::abs(top[3][1] - top[2][1]),2));
 
-// #ifdef ENABLE_DOCTEST_IN_LIBRARY
-// #include "../tests/doctest/doctest.h"
-// TEST_CASE("we can have tests written here, to test impl. details")
-// {
-//     CHECK(true);
-// }
-// #endif
+    side4 = sqrt( pow( std::abs(top[0][0] - top[3][0]),2)  +  pow( std::abs(top[0][1] - top[3][1]),2));
+
+    if((std::abs(side1 - side3) <= MIN_DIFF) && (std::abs(side2 - side4) <= MIN_DIFF )){
+        return true;
+    }
+    else{
+
+        std::cout << side1 << " != " << side3 << " Mozliwe przekroczenie dopuszczalnego marginesu bledu" << std::endl;
+        std::cout << side2 << " != " << side4 << " Mozliwe przekroczenie dopuszczalnego marginesu bledu" << std::endl;
+
+        return false;
+    }
+    
+}

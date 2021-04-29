@@ -34,9 +34,9 @@ public:
 
     bool operator == (const Matrix tmp) const;
 
-    const double &operator [] (int index) const;
+    const double &operator [] (unsigned int index) const;
     
-    double &operator [] (int index);
+    double &operator [] (unsigned int index);
 
 };
 

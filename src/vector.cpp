@@ -9,7 +9,7 @@
  |      Tablice wypelniona wartoscia 0.                                       |
  */
 Vector::Vector() {
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         size[i] = 0;
     }
 }
@@ -24,12 +24,19 @@ Vector::Vector() {
  */
 
 Vector::Vector(double tmp[SIZE]) {
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         this->size[i] = tmp[i];
     }
 }
 
-
+/******************************************************************************
+ |  Konstruktor klasy Vector.                                                 |
+ |  Argumenty:                                                                |
+ |      x - Wymiar w x.                                                       |
+ |      y - Wymiar w y.                                                       |
+ |  Zwraca:                                                                   |
+ |      Tablice wypelniona wartosciami podanymi w argumentach.                |
+ */
 Vector::Vector(double x, double y ) {
     
     this->size[0] = x;
@@ -48,12 +55,17 @@ Vector::Vector(double x, double y ) {
  */
 Vector Vector::operator + (const Vector &v) {
     Vector result;
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         result[i] = size[i] += v[i];
     }
     return result;
 }
 
+/*!
+ * Metoda do szybkiego zapisu danych do wektora przydatne w testowaniu.
+ *
+ *                       
+ */
 void Vector::Load_vector(){
     double x,y;
     std::cout<<"Proszę podać wektor przesunięcia"<<std::endl;
@@ -76,7 +88,7 @@ void Vector::Load_vector(){
  */
 Vector Vector::operator - (const Vector &tmp) {
     Vector result;
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         result[i] = size[i] -= tmp[i];
     }
     return result;
@@ -96,7 +108,7 @@ Vector Vector::operator - (const Vector &tmp) {
 
 Vector Vector::operator * (const double &tmp) {
     Vector result;
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         result[i] = size[i] *= tmp;
     }
     return result;
@@ -117,13 +129,20 @@ Vector Vector::operator * (const double &tmp) {
 Vector Vector::operator / (const double &tmp) {
     Vector result;
 
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         result[i] = size[i] / tmp;
     }
 
     return result;
 }
 
+/*!
+ * Realizuje porownanie dwoch wektorow ze soba dopuszczajac margines bledu.
+ * \param[in] tmp - nazwa wektora sprawdzanego z wektorem zawartym wewnatrz klasy
+ * 
+ * \retval true - gdy oba sa sobie rowne.
+ * \retval false - w przypadku przeciwnym.
+ */
 bool Vector::operator == (const Vector &tmp) const{
     if((std::abs(this->size[0] - tmp.size[0]) <= MIN_DIFF ) && (std::abs(this->size[1] - tmp.size[1]) <= MIN_DIFF )){
         return true;
@@ -131,64 +150,77 @@ bool Vector::operator == (const Vector &tmp) const{
     return false;
 }
 
-/******************************************************************************
- |  Funktor wektora.                                                          |
- |  Argumenty:                                                                |
- |      index - index wektora.                                                |
- |  Zwraca:                                                                   |
- |      Wartosc wektora w danym miejscu tablicy jako stala.                   |
+/*!
+ * Przeciazenie operatora [] const dla danych chronionych wektora.
+ * \param[in] index - pomocniczy unsigned int ktory zwroci odpowiedni dla
+ *                      liczby czesc tablicy wspolrzednych.
+ * 
  */
 const double &Vector::operator [] (int index) const {
     if (index < 0 || index >= SIZE) {
         std::cerr << "Error: Wektor jest poza zasiegiem!" << std::endl;
-    } // lepiej byłoby rzucić wyjątkiem stdexcept
+    }
     return size[index];
 }
 
 
-/******************************************************************************
- |  Funktor wektora.                                                          |
- |  Argumenty:                                                                |
- |      index - index wektora.                                                |
- |  Zwraca:                                                                   |
- |      Wartosc wektora w danym miejscu tablicy.                              |
- */
-double &Vector::operator[](int index) {
+/*!
+ * Przeciazenie operatora [] dla danych chronionych wektora.
+ * \param[in] index - pomocniczy unsigned int ktory zwroci odpowiedni dla
+ *                      liczby czesc tablicy wspolrzednych.
+ * 
+ */ 
+double &Vector::operator [] (int index) {
+    if (index < 0 || index >= SIZE) {
+        std::cerr << "Error: Wektor jest poza zasiegiem!" << std::endl;
+    }
     return const_cast<double &>(const_cast<const Vector *>(this)->operator[](index));
 }
 
 
-/******************************************************************************
- |  Przeciazenie operatora <<                                                 |
- |  Argumenty:                                                                |
- |      out - strumien wejsciowy,                                             |
- |      tmp - wektor.                                                         |
+/*!
+ * Przeciazenie operatora wypisywania.
+ * \param[in] out - strumien wyjsciowy, do ktorego maja zostac zapisane
+ *                     kolejne wspolrzedne.
+ * \param[in] tmp - skladowa klasy Vektor ktora bedzie wypisywana na
+ *                      wyjscie.
+ * 
  */
-std::ostream &operator << (std::ostream &out, Vector const &tmp) {
-    for (int i = 0; i < SIZE; i++) {
+std::ostream &operator << (std::ostream &out, Vector const &tmp){
+    for (int i = 0; i < SIZE; ++i) {
         out << "[ " << tmp[i] << " ] ";
     }
     return out;
 }
 
 
-/******************************************************************************
- |  Przeciazenie operatora >>                                                 |
- |  Argumenty:                                                                |
- |      in - strumien wyjsciowy,                                              |
- |      tmp - wektor.                                                         |
+/*!
+ * Przeciazenie operatora wpisywania.
+ * \param[in] in - strumien wejsciowy, z ktorego maja zostac wypisane
+ *                     kolejne wspolrzedne.
+ * \param[in] tmp - skladowa klasy Vektor ktora bedzie przyjmowac dane
+ *                      z wejscia.
+ * 
  */
 std::istream &operator >> (std::istream &in, Vector &tmp) {
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         in >> tmp[i];
     }
     std::cout << std::endl;
     return in;
 }
 
+/*!
+ * Przeciazenie operatora wpisywania do pliku.
+ * \param[in] in - strumien wejsciowy do pliku, z ktorego maja zostac wpisane
+ *                     kolejne wspolrzedne.
+ * \param[in] tmp - skladowa klasy Vektor ktora bedzie przyjmowac dane
+ *                      z wejscia.
+ * 
+ */
 std::ifstream &operator >> (std::ifstream &in, Vector &tmp){
     
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; ++i) {
         in >> tmp[i];
     }
     return in;

@@ -16,23 +16,21 @@ public:
 
 // Metody
 
-  void Miotanie_prostokata(const Matrix &tmp);
+  void throwing_rectangle(const Matrix &tmp);
+
+  bool length_of_the_sides();
 
   void Kicking_rectangle(const Vector &tmp);
-
-  void load_data(std::string File_name, int corner);
 
   void ZapisWspolrzednychDoStrumienia( std::ofstream& StrmWy);
 
   bool ZapisWspolrzednychDoPliku( const char *File_name);
 
-  const Vector &operator [] (int index) const;
+  const Vector &operator [] (unsigned int index) const;
 
-  Vector &operator [] (int index);
+  Vector &operator [] (unsigned int index);
 
-  bool operator != (const Rectangle &tmp);
-
-  bool operator == (const Rectangle &tmp);
+  bool operator == (const Rectangle &tmp) const;
 
 };
 

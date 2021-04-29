@@ -110,7 +110,7 @@ int main() {
                      macierz.obrotmacierzy(z);
               }
 
-              rectangle.Miotanie_prostokata(macierz);
+              rectangle.throwing_rectangle(macierz);
 
               if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE )) {
                      return 1;
@@ -131,13 +131,21 @@ int main() {
               break;
        case 3:
               std::cout << rectangle;
+
+              if(rectangle.length_of_the_sides()){
+                     std::cout << "\n\tDlugosci naprzeciwleglych bokow sa rowne" << std::endl;
+              }
+              else{
+                     std::cout << "\n\tDlugosci naprzeciwleglych bokow nie sa rowne!!!" << std::endl;
+              }
+
               break;
        case 4:
               if (!rectangle.ZapisWspolrzednychDoPliku( WSK_FILE )) { return 1; }
               exit(1);
               break;
        default:
-              std::cout<<"Niepoprawna operacja, numerek 0 to MENU"<<std::endl;
+              std::cout<<" Niepoprawna operacja, numerek 0 to MENU"<<std::endl;
               break;
        }
 

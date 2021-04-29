@@ -18,9 +18,9 @@ Matrix::Matrix() {
 
 
 /******************************************************************************
- |  Konstruktor parametryczny klasy Matrix.                                              |
+ |  Konstruktor parametryczny klasy Matrix.                                   |
  |  Argumenty:                                                                |
- |      tmp - dwuwymiarowa tablica z elementami typu double.                               |
+ |      tmp - dwuwymiarowa tablica z elementami typu double.                  |
  |  Zwraca:                                                                   |
  |      Macierz wypelniona wartosciami podanymi w argumencie.                 |
  */
@@ -32,6 +32,12 @@ Matrix::Matrix(double tmp[SIZE][SIZE]) {
     }
 }
 
+/*!
+ * Realizuje obrot macierzy o zadany kat.
+ * \param[in] kat - kat w stopniach jaki zostanie zmieniony w radiany a nastepnie
+ *                      przysluzy do obrotu danych macierzy.
+ * 
+ */
 void Matrix::obrotmacierzy(double kat){
     
     double rad = kat * M_PI / 180;
@@ -42,6 +48,13 @@ void Matrix::obrotmacierzy(double kat){
     value[1][1] = cos(rad);
 }
 
+/*!
+ * Realizuje porownanie dwoch macierzy ze soba dopuszczajac margines bledu.
+ * \param[in] tmp - nazwa macierzy sprawdzanej z macierza zawarta wewnatrz klasy
+ * 
+ * \retval true - gdy obie sa sobie rowne.
+ * \retval false - w przypadku przeciwnym.
+ */
 bool Matrix::operator == (const Matrix tmp) const{
     
     for(int i = 0; i < SIZE; i++){
@@ -54,16 +67,27 @@ bool Matrix::operator == (const Matrix tmp) const{
     return true;
 }
 
-double &Matrix::operator [] (int index){
-if (index < 0 || index >= SIZE*2) {
+/*!
+ * Przeciazenie operatora [] dla danych chronionych macierzy.
+ * \param[in] index - pomocniczy unsigned int ktory zwroci odpowiedni dla
+ *                      liczby czesc tablicy wspolrzednych.
+ * 
+ */
+double &Matrix::operator [] (unsigned int index){
+if ( index >= SIZE*2 ) {
         std::cerr << "Error: Macierz jest poza zasiegiem!" << std::endl;
 } // lepiej byłoby rzucić wyjątkiem stdexcept
 
 return value[index][index];
 }
 
-
-const double &Matrix::operator [] (int index) const{
+/*!
+ * Przeciazenie operatora [] const dla danych chronionych macierzy.
+ * \param[in] index - pomocniczy unsigned int ktory zwroci odpowiedni dla
+ *                      liczby czesc tablicy wspolrzednych.
+ * 
+ */
+const double &Matrix::operator [] (unsigned int index) const{
     return value[index][index];
 }
 
@@ -178,26 +202,28 @@ Matrix Matrix::operator + (Matrix tmp) {
  |      in - strumien wyjsciowy,                                              |
  |      mat - macierz.                                                         |
  */
-std::istream &operator >> (std::istream &in, Matrix &mat) {
+std::istream &operator >> (std::istream &in, Matrix &tmp) {
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
-            in >> mat(i, j);
+            in >> tmp(i, j);
         }
     }
     return in;
 }
 
 
-/******************************************************************************
- |  Przeciazenie operatora <<                                                 |
- |  Argumenty:                                                                |
- |      out - strumien wejsciowy,                                             |
- |      mat - macierz.                                                        |
+/*!
+ * Przeciazenie operatora wypisywania na ekran.
+ * \param[in] out - strumien wyjsciowy, z ktorego maja zostac wpisane
+ *                     kolejne wspolrzedne.
+ * \param[in] tmp - skladowa klasy Matrix z ktorej bedzie wypisywane
+ *                     wspolrzedne na ekran.
+ * 
  */
-std::ostream &operator << (std::ostream &out, const Matrix &mat) {
+std::ostream &operator << (std::ostream &out, const Matrix &tmp) {
     for (int i = 0; i < SIZE; ++i) {
         for (int j = 0; j < SIZE; ++j) {
-            out << "| " << mat(i, j) << " | "; //warto ustalic szerokosc wyswietlania dokladnosci liczb
+            out << "| " << tmp(i, j) << " | "; //warto ustalic szerokosc wyswietlania dokladnosci liczb
         }
         std::cout << std::endl;
     }
