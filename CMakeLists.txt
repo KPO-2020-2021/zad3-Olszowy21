@@ -48,7 +48,7 @@ set(TESTFILES        # All .cpp files in tests/
     tests/main.cpp
     tests/vector.cpp
     tests/matrix.cpp
-    tests/ractangle.cpp
+    tests/rectangle.cpp
 )
 set(LIBRARY_NAME engine)  # Default name for the library built from src/*.cpp (change if you wish)
 
