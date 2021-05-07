@@ -57,28 +57,6 @@ TEST_CASE("Test przeciążenia mnożenia MACIERZ * WEKTOR")
     CHECK(Wynik == test);
 }
 
-TEST_CASE("Test operatora [] ")
-{
-    Matrix macierz = Matrix();
-
-    Matrix test;
-
-    test(0, 0) = 0;
-    test(1, 0) = 0;
-    test(0, 1) = 0;
-    test(1, 1) = 0;
-
-    CHECK(macierz == test);
-}
-
-TEST_CASE("Test zabezpieczenia operatora ()")
-{
-    Matrix macierz = Matrix();
-    std::ostringstream Strumien_out;
-
-    WARN_THROWS(Strumien_out << macierz(2, 2));
-}
-
 TEST_CASE("Test operatora []")
 {
     Matrix macierz = Matrix();

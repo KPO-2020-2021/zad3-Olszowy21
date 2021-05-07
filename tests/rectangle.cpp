@@ -151,8 +151,9 @@ TEST_CASE("Test przeciążenia << do pliku")
 
     std::string File_name = "../datasets/prostokat.dat";
     const char* WSK_FILE = File_name.c_str();
+    std::ofstream FILE;
 
-    WARN_THROWS(Prostokacik.ZapisWspolrzednychDoPliku( WSK_FILE ) == 0);
+    CHECK(Prostokacik.ZapisWspolrzednychDoPliku(WSK_FILE) == 1);
 }
 
 TEST_CASE("Test Metody sprzawdzajacej dlugosci bokow z dopuszczalnym marginesem bledu")
